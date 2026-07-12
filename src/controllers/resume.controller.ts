@@ -1,17 +1,14 @@
 import { Request, Response } from "express";
 
+import { asyncHandler } from "@/utils/async-handler";
+import { AppError } from "@/utils/errors";
+
 import { processResume } from "../services/resume/resume.service";
 
-export async function uploadResumeController(
-  req: Request,
-  res: Response
-) {
-  try {
+export const uploadResumeController = asyncHandler(
+  async (req: Request, res: Response) => {
     if (!req.file) {
-      return res.status(400).json({
-        success: false,
-        message: "Resume is required.",
-      });
+      throw new AppError(400, "Resume is required.");
     }
 
     const result = await processResume(req.file.path);
@@ -29,12 +26,5 @@ export async function uploadResumeController(
 
       resume: result.resume,
     });
-  } catch (error) {
-    console.error(error);
-
-    return res.status(500).json({
-      success: false,
-      message: "Resume processing failed.",
-    });
   }
-}
+);
