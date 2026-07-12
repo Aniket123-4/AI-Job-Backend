@@ -1,0 +1,75 @@
+# ==========================
+# Dependencies
+# ==========================
+node_modules/
+
+# ==========================
+# Build
+# ==========================
+dist/
+build/
+
+# ==========================
+# Environment
+# ==========================
+.env
+.env.local
+.env.development.local
+.env.production.local
+.env.test.local
+
+# ==========================
+# Uploads & Generated Files
+# ==========================
+src/data/uploads/*
+src/data/generated/*
+src/data/history/*
+src/data/temp/*
+
+# Keep folders in git
+!src/data/uploads/.gitkeep
+!src/data/generated/.gitkeep
+!src/data/history/.gitkeep
+!src/data/temp/.gitkeep
+
+# ==========================
+# Logs
+# ==========================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ==========================
+# Coverage
+# ==========================
+coverage/
+.nyc_output/
+
+# ==========================
+# TypeScript
+# ==========================
+*.tsbuildinfo
+
+# ==========================
+# IDE
+# ==========================
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+.idea/
+
+# ==========================
+# OS Files
+# ==========================
+.DS_Store
+Thumbs.db
+
+# ==========================
+# Misc
+# ==========================
+*.tmp
+*.temp
