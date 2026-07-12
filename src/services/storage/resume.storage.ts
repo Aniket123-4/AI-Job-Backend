@@ -1,6 +1,6 @@
 import { randomUUID } from "node:crypto";
 
-import { db } from "@/config/db";
+import { db } from "../../config/db";
 
 export async function saveResume(
   resume: unknown

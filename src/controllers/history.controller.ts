@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
-import { asyncHandler } from "@/utils/async-handler";
-import { AppError } from "@/utils/errors";
+import { asyncHandler } from "..//utils/async-handler";
+import { AppError } from "..//utils/errors";
 
 import {
   deleteHistory,

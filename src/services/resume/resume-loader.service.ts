@@ -1,4 +1,4 @@
-import { AppError } from "@/utils/errors";
+import { AppError } from "../../utils/errors";
 
 import { getResume } from "../storage";
 

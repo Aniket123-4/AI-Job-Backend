@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
 
-import { asyncHandler } from "@/utils/async-handler";
+import { asyncHandler } from "..//utils/async-handler";
 
-import { loadResume } from "@/services/resume/resume-loader.service";
+import { loadResume } from "..//services/resume/resume-loader.service";
 
-import { updateResume } from "@/services/storage";
+import { updateResume } from "..//services/storage";
 
-import { generateInterviewQuestions } from "@/services/interview/interview.service";
+import { generateInterviewQuestions } from "..//services/interview/interview.service";
 
 export const interviewController = asyncHandler(
   async (req: Request, res: Response) => {
