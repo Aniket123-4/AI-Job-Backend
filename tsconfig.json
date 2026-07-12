@@ -21,7 +21,6 @@
     "verbatimModuleSyntax": false,
 
     "sourceMap": true,
-    "ignoreDeprecations": "6.0",
 
     "baseUrl": "./src",
 
