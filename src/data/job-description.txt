@@ -1,0 +1,27 @@
+Java Full Stack Developer
+
+Requirements
+
+- React.js
+- TypeScript
+- Node.js
+- Express.js
+- MongoDB
+- REST APIs
+- Git
+- Docker
+- AWS
+- CI/CD
+- Agile
+
+Responsibilities
+
+Develop scalable applications.
+
+Optimize performance.
+
+Write reusable components.
+
+Collaborate with backend developers.
+
+Participate in code reviews.

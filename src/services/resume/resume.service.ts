@@ -1,9 +1,30 @@
 import { parseResume } from "../parser";
 
-export async function processResume(filePath: string) {
-  const text = await parseResume(filePath);
+import { askAI } from "../ai/ai.service";
+
+import { resumePrompt } from "../ai/prompts/resume.prompt";
+
+import { ResumeSchema } from "../ai/schemas/resume.schema";
+
+import { saveResume } from "../storage/resume.storage";
+
+export async function processResume(
+  filePath: string
+) {
+  const rawText = await parseResume(filePath);
+
+  const prompt = resumePrompt(rawText);
+
+  const response = await askAI(prompt);
+
+  const json = JSON.parse(response);
+
+  const resume = ResumeSchema.parse(json);
+
+  const resumeId = await saveResume(resume);
 
   return {
-    rawText: text,
+    resumeId,
+    resume,
   };
 }
