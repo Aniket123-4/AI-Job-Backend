@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
 
-import { asyncHandler } from "@/utils/async-handler";
+import { asyncHandler } from "..//utils/async-handler";
 
-import { loadResume } from "@/services/resume/resume-loader.service";
+import { loadResume } from "..//services/resume/resume-loader.service";
 
-import { updateResume } from "@/services/storage";
+import { updateResume } from "..//services/storage";
 
-import { tailorResume } from "@/services/resume-tailor/tailor.service";
+import { tailorResume } from "..//services/resume-tailor/tailor.service";
 
 export const tailorResumeController = asyncHandler(
   async (req: Request, res: Response) => {

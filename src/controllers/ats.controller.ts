@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
 
-import { asyncHandler } from "@/utils/async-handler";
+import { asyncHandler } from "../utils/async-handler";
 
-import { analyzeATS } from "@/services/ats/ats.service";
+import { analyzeATS } from "../services/ats/ats.service";
 
-import { loadResume } from "@/services/resume/resume-loader.service";
+import { loadResume } from "../services/resume/resume-loader.service";
 
-import { updateResume } from "@/services/storage";
+import { updateResume } from "../services/storage";
 
 export const analyzeATSController = asyncHandler(
   async (req: Request, res: Response) => {

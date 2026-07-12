@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
 
-import { asyncHandler } from "@/utils/async-handler";
+import { asyncHandler } from "..//utils/async-handler";
 
-import { loadResume } from "@/services/resume/resume-loader.service";
+import { loadResume } from "..//services/resume/resume-loader.service";
 
-import { updateResume } from "@/services/storage";
+import { updateResume } from "..//services/storage";
 
-import { generateRecruiterMessage } from "@/services/recruiter/recruiter.service";
+import { generateRecruiterMessage } from "..//services/recruiter/recruiter.service";
 
 export const recruiterController = asyncHandler(
   async (req: Request, res: Response) => {
