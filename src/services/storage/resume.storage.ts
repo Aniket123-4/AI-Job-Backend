@@ -1,58 +1,69 @@
 import { randomUUID } from "node:crypto";
-import fs from "node:fs/promises";
-import path from "node:path";
 
-const STORAGE = path.join(
-  process.cwd(),
-  "src",
-  "data",
-  "history",
-  "resumes.json"
-);
+import { db } from "@/config/db";
 
-async function ensureFile() {
-  try {
-    await fs.access(STORAGE);
-  } catch {
-    await fs.mkdir(path.dirname(STORAGE), {
-      recursive: true,
-    });
-
-    await fs.writeFile(STORAGE, "[]");
-  }
-}
-
-export async function saveResume(resume: unknown) {
-  await ensureFile();
-
-  const content = await fs.readFile(STORAGE, "utf-8");
-
-  const resumes = JSON.parse(content);
-
+export async function saveResume(
+  resume: unknown
+) {
   const id = randomUUID();
 
-  resumes.push({
+  db.data.resumes.push({
     id,
     createdAt: new Date().toISOString(),
-    resume,
+    originalResume: resume,
+    ats: null,
+    tailoredResume: null,
+    coverLetter: null,
+    recruiterMessage: null,
+    interviewQuestions: null,
   });
 
-  await fs.writeFile(
-    STORAGE,
-    JSON.stringify(resumes, null, 2)
-  );
+  await db.write();
 
   return id;
 }
 
 export async function getResume(id: string) {
-  await ensureFile();
-
-  const content = await fs.readFile(STORAGE, "utf-8");
-
-  const resumes = JSON.parse(content);
-
-  return resumes.find(
-    (resume: any) => resume.id === id
+  return (
+    db.data.resumes.find(
+      (item) => item.id === id
+    ) ?? null
   );
+}
+
+export async function getHistory() {
+  return db.data.resumes;
+}
+
+export async function deleteHistory(id: string) {
+  db.data.resumes =
+    db.data.resumes.filter(
+      (item) => item.id !== id
+    );
+
+  await db.write();
+}
+
+export async function updateResume(
+  id: string,
+  data: Partial<{
+    ats: unknown;
+    tailoredResume: unknown;
+    coverLetter: unknown;
+    recruiterMessage: unknown;
+    interviewQuestions: unknown;
+  }>
+) {
+  const resume =
+    db.data.resumes.find(
+      (item) => item.id === id
+    );
+
+  if (!resume) return null;
+
+  Object.assign(resume, data);
+
+  await db.write();
+
+  return resume;
 }

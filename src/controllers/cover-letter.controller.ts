@@ -1,44 +1,31 @@
 import { Request, Response } from "express";
 
-import { getResume } from "../services/storage";
+import { asyncHandler } from "@/utils/async-handler";
 
-import { generateCoverLetter } from "../services/cover-letter/cover-letter.service";
+import { loadResume } from "@/services/resume/resume-loader.service";
 
-export async function generateCoverLetterController(
-  req: Request,
-  res: Response
-) {
-  try {
-    const { resumeId, jobDescription } =
-      req.body;
+import { updateResume } from "@/services/storage";
 
-    const stored =
-      await getResume(resumeId);
+import { generateCoverLetter } from "@/services/cover-letter/cover-letter.service";
 
-    if (!stored) {
-      return res.status(404).json({
-        success: false,
-        message: "Resume not found.",
-      });
-    }
+export const generateCoverLetterController = asyncHandler(
+  async (req: Request, res: Response) => {
+    const { resumeId, jobDescription } = req.body;
 
-    const result =
-      await generateCoverLetter(
-        stored.resume,
-        jobDescription
-      );
+    const stored = await loadResume(resumeId);
+
+    const result = await generateCoverLetter(
+      stored.originalResume,
+      jobDescription
+    );
+
+    await updateResume(resumeId, {
+      coverLetter: result,
+    });
 
     return res.json({
       success: true,
       result,
     });
-  } catch (error) {
-    console.error(error);
-
-    return res.status(500).json({
-      success: false,
-      message:
-        "Cover Letter generation failed.",
-    });
   }
-}
+);

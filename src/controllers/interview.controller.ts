@@ -6,21 +6,21 @@ import { loadResume } from "@/services/resume/resume-loader.service";
 
 import { updateResume } from "@/services/storage";
 
-import { tailorResume } from "@/services/resume-tailor/tailor.service";
+import { generateInterviewQuestions } from "@/services/interview/interview.service";
 
-export const tailorResumeController = asyncHandler(
+export const interviewController = asyncHandler(
   async (req: Request, res: Response) => {
     const { resumeId, jobDescription } = req.body;
 
     const stored = await loadResume(resumeId);
 
-    const result = await tailorResume(
+    const result = await generateInterviewQuestions(
       stored.originalResume,
       jobDescription
     );
 
     await updateResume(resumeId, {
-      tailoredResume: result,
+      interviewQuestions: result,
     });
 
     return res.json({
