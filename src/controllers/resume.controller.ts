@@ -14,7 +14,7 @@ export async function uploadResumeController(
       });
     }
 
-    const resume = await processResume(req.file.path);
+    const result = await processResume(req.file.path);
 
     return res.json({
       success: true,
@@ -25,7 +25,9 @@ export async function uploadResumeController(
         size: req.file.size,
       },
 
-      resume,
+      resumeId: result.resumeId,
+
+      resume: result.resume,
     });
   } catch (error) {
     console.error(error);
